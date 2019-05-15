@@ -8,18 +8,18 @@ import gpio_mod as mod
 # Doing some Face Recognition with the webcam
 # video 1
 video_capture = cv2.VideoCapture(0)
-video_capture.set(3, 320) #weight
-video_capture.set(4, 240) #height
+video_capture.set(3, 320)  #width
+video_capture.set(4, 240)  #height
 
 # video 2
 video_capture2 = cv2.VideoCapture(1)
-video_capture2.set(3, 320) #weight
-video_capture2.set(4, 240) #height
+video_capture2.set(3, 320)  #width
+video_capture2.set(4, 240)  #height
 
 # video 3
 video_capture3 = cv2.VideoCapture(2)
-video_capture3.set(3, 320) #weight
-video_capture3.set(4, 240) #height
+video_capture3.set(3, 320)  #width
+video_capture3.set(4, 240)  #height
 
 # -------------------------------------------
 
@@ -65,7 +65,7 @@ conn3, addr3 = s3.accept()
 conn4, addr4 = s4.accept()
 # -------------------------------------------
 
-encode_param=[int(cv2.IMWRITE_JPEG_QUALITY),90]
+encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 
 while True:
     # -------------------------------------------
@@ -76,7 +76,7 @@ while True:
     # -------------------------------------------
 
     #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    
+
     # -------------------------------------------
     # socket video 1
     result, imgencode = cv2.imencode('.jpg', frame, encode_param)
@@ -84,7 +84,9 @@ while True:
     stringData = data.tostring()
 
     #print(str(len(stringData)).ljust(16))
-    conn.send(str(len(stringData)).ljust(16).encode(encoding='utf_8', errors='strict'))
+    conn.send(
+        str(len(stringData)).ljust(16).encode(
+            encoding='utf_8', errors='strict'))
     conn.send(stringData)
     # -------------------------------------------
 
@@ -95,7 +97,9 @@ while True:
     stringData2 = data2.tostring()
 
     #print(str(len(stringData)).ljust(16))
-    conn2.send(str(len(stringData2)).ljust(16).encode(encoding='utf_8', errors='strict'))
+    conn2.send(
+        str(len(stringData2)).ljust(16).encode(
+            encoding='utf_8', errors='strict'))
     conn2.send(stringData2)
     # -------------------------------------------
 
@@ -106,7 +110,9 @@ while True:
     stringData3 = data3.tostring()
 
     #print(str(len(stringData)).ljust(16))
-    conn3.send(str(len(stringData3)).ljust(16).encode(encoding='utf_8', errors='strict'))
+    conn3.send(
+        str(len(stringData3)).ljust(16).encode(
+            encoding='utf_8', errors='strict'))
     conn3.send(stringData3)
     # -------------------------------------------
 
@@ -117,13 +123,11 @@ while True:
     # -------------------------------------------
 
     ret, frame = video_capture.read()
-    decimg=cv2.imdecode(data,1)
-    #cv2.imshow('SERVER2',decimg)    
+    decimg = cv2.imdecode(data, 1)
+    #cv2.imshow('SERVER2',decimg)
     #
-    
-   # cv2.imshow('Video', decimg)
-    
-    
+
+    # cv2.imshow('Video', decimg)
 
     # receive socket msg
     res = conn.recv(1024)
@@ -167,10 +171,10 @@ while True:
     elif res == b'sl30':
         mod.SP_30L()
     # elif res == b'stop':
-        # mod.stop()
-        # print(res)
+    # mod.stop()
+    # print(res)
 #traffic sign use (Peter
-    
+
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
